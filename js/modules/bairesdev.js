@@ -73,3 +73,30 @@ export function calcularViajesMinimos(totalItems, capacidadPorViaje) {
   }
   return Math.ceil(totalItems / capacidadPorViaje);
 }
+/**
+ * Reto 5: Divisores exactos de un numero entero positivo
+ * @param {number} numero - Entero positivo mayor o igual a 1
+ * @returns {{ numero: number, divisores: number[], cantidad: number, pasos: string[] }}
+ */
+export function obtenerDivisoresExactos(numero) {
+  if (!Number.isInteger(numero) || numero < 1) {
+    throw new Error("El numero debe ser un entero positivo mayor o igual a 1.");
+  }
+
+  const divisores = [];
+  const pasos = [`Buscando divisores exactos para ${numero} (residuo igual a 0):`];
+
+  for (let i = 1; i <= numero; i++) {
+    if (numero % i === 0) {
+      divisores.push(i);
+      pasos.push(`${numero} / ${i} = ${numero / i} (residuo 0 -> es divisor)`);
+    }
+  }
+
+  return {
+    numero,
+    divisores,
+    cantidad: divisores.length,
+    pasos
+  };
+}
