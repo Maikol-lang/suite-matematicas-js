@@ -16,8 +16,8 @@
         <p class="subtitle">Logica Computacional, Algebra Cuadratica y Precision Numerica</p>
       </div>
       <div class="student-info">
-        <div class="info-tag"><strong>Estudiante:</strong> <span class="placeholder">[Tu Nombre Completo]</span></div>
-        <div class="info-tag"><strong>Repositorio:</strong> <span class="placeholder">[git: tu-usuario/suite-logica]</span></div>
+        <div class="info-tag"><strong>Estudiante:</strong> Maikol Andres Bejarano Rubio <span class="placeholder"></span></div>
+        <div class="info-tag"><strong>Repositorio:</strong> https://github.com/Maikol-lang/suite-matematicas-js <span class="placeholder"></span></div>
       </div>
     </div>
   </header>
@@ -75,6 +75,90 @@
           </div>
           <button class="btn btn-primary" id="btn-calc-botellas">Calcular Viajes</button>
           <div class="result-box" id="res-botellas">Esperando calculo...</div>
+        </div>
+
+        <!-- Retos 5 al 10 + Extra (Taller Original) -->
+        <div class="card">
+          <div class="card-header"><span class="card-num">#05</span><h3>Edades Relativas (Taller Reto 5)</h3></div>
+          <p class="card-desc">Edad de Pablo cuando sea m veces la edad de su hermana.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-edad-pablo">Edad Pablo:</label><input type="number" id="input-edad-pablo" value="20" min="1"></div>
+            <div class="form-group"><label for="input-edad-k">Veces hermana (k):</label><input type="number" id="input-edad-k" value="4" min="1"></div>
+            <div class="form-group"><label for="input-edad-razon">Razon futura:</label><input type="number" id="input-edad-razon" value="2" min="2"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-edad">Calcular Edad Futura</button>
+          <div class="result-box" id="res-edad">Esperando calculo...</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-num">#06</span><h3>Recipiente Vacío (Taller Reto 6)</h3></div>
+          <p class="card-desc">Peso del envase vacio a partir de peso lleno, parcial y fraccion.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-peso-lleno">Peso Lleno:</label><input type="number" id="input-peso-lleno" step="any" value="780"></div>
+            <div class="form-group"><label for="input-peso-parcial">Peso Parcial:</label><input type="number" id="input-peso-parcial" step="any" value="590"></div>
+            <div class="form-group"><label for="input-peso-frac">Fraccion:</label><input type="number" id="input-peso-frac" step="any" value="0.5"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-recipiente">Calcular Recipiente</button>
+          <div class="result-box" id="res-recipiente">Esperando calculo...</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-num">#07</span><h3>Diferencial de Ingreso (Taller Reto 7)</h3></div>
+          <p class="card-desc">Diferencia neta de ingresos (I2 - I1) en dolares (centavos a USD).</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-q1">Cant. 1 (q1):</label><input type="number" id="input-q1" value="20"></div>
+            <div class="form-group"><label for="input-p1">Precio 1 (ctv):</label><input type="number" id="input-p1" value="10"></div>
+            <div class="form-group"><label for="input-q2">Cant. 2 (q2):</label><input type="number" id="input-q2" value="15"></div>
+            <div class="form-group"><label for="input-p2">Precio 2 (ctv):</label><input type="number" id="input-p2" value="20"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-ingreso">Calcular Diferencia</button>
+          <div class="result-box" id="res-ingreso">Esperando calculo...</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-num">#08</span><h3>Porcentaje de Aumento (Taller Reto 10)</h3></div>
+          <p class="card-desc">Porcentaje de incremento entre un valor inicial v1 y uno nuevo v2.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-v1">Valor Inicial (v1):</label><input type="number" id="input-v1" step="any" value="40"></div>
+            <div class="form-group"><label for="input-v2">Valor Nuevo (v2):</label><input type="number" id="input-v2" step="any" value="43"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-aumento">Calcular Aumento</button>
+          <div class="result-box" id="res-aumento">Esperando calculo...</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-num">#09</span><h3>Cuotas vs Contado (Taller Reto 11)</h3></div>
+          <p class="card-desc">Ahorro al pagar de contado frente a financiar en cuotas.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-cuotas-n">Nro. Cuotas:</label><input type="number" id="input-cuotas-n" value="12" min="1"></div>
+            <div class="form-group"><label for="input-cuotas-monto">Monto Cuota:</label><input type="number" id="input-cuotas-monto" step="any" value="88"></div>
+            <div class="form-group"><label for="input-precio-contado">Contado:</label><input type="number" id="input-precio-contado" step="any" value="780"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-contado">Calcular Ahorro</button>
+          <div class="result-box" id="res-contado">Esperando calculo...</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-num">#10</span><h3>Elemento Intruso (Taller Reto 12)</h3></div>
+          <p class="card-desc">Detecta el primer numero de la lista que no es divisible por el divisor.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-intruso-lista">Lista (separada por comas):</label><input type="text" id="input-intruso-lista" value="12, 24, 9, 3, 300, 39, 2"></div>
+            <div class="form-group"><label for="input-intruso-div">Divisor:</label><input type="number" id="input-intruso-div" value="3"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-intruso">Buscar Intruso</button>
+          <div class="result-box" id="res-intruso">Esperando calculo...</div>
+        </div>
+
+        <div class="card">
+          <div class="card-header"><span class="card-num">EXTRA</span><h3>Dato Faltante por Promedio (Taller Reto 15)</h3></div>
+          <p class="card-desc">Halla el numero faltante dados el promedio, total de elementos y conocidos.</p>
+          <div class="form-row">
+            <div class="form-group"><label for="input-prom-objetivo">Promedio:</label><input type="number" id="input-prom-objetivo" step="any" value="9"></div>
+            <div class="form-group"><label for="input-prom-total">Total Elementos:</label><input type="number" id="input-prom-total" value="4" min="1"></div>
+            <div class="form-group"><label for="input-prom-conocidos">Conocidos (comas):</label><input type="text" id="input-prom-conocidos" value="5, 9, 12"></div>
+          </div>
+          <button class="btn btn-primary" id="btn-calc-faltante">Calcular Faltante</button>
+          <div class="result-box" id="res-faltante">Esperando calculo...</div>
         </div>
       </div>
     </section>

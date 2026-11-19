@@ -2,7 +2,19 @@
  * Aplicacion Principal - Integracion de Modulos y UI
  */
 
-import { calcularProbabilidadDados, calcularPartidosTorneo, contarMultiplosMenores, calcularViajesMinimos } from "./modules/bairesdev.js";
+import {
+  calcularProbabilidadDados,
+  calcularPartidosTorneo,
+  contarMultiplosMenores,
+  calcularViajesMinimos,
+  edadFuturaPablo,
+  pesoRecipienteVacio,
+  diferenciaIngresoDolares,
+  porcentajeAumento,
+  ahorroAlContado,
+  elementoIntrusoDivisor,
+  numeroFaltantePromedio
+} from "./modules/bairesdev.js";
 import { resolverCuadratica, evaluarPolinomio } from "./modules/cuadratica.js";
 import { analizarSecuencia } from "./modules/secuencias.js";
 import { ejecutarSuiteCompleta } from "./modules/test-suite.js";
@@ -108,6 +120,156 @@ function initModuloA() {
                               `Viajes requeridos: <strong>${viajes} viajes</strong> (Función techo / ceil)`;
     } catch (e) {
       resBotellas.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
+    }
+  });
+
+  // Reto 5 (Taller Reto 5): Edades Relativas
+  const btnEdad = document.getElementById("btn-calc-edad");
+  const inputEdadPablo = document.getElementById("input-edad-pablo");
+  const inputEdadK = document.getElementById("input-edad-k");
+  const inputEdadRazon = document.getElementById("input-edad-razon");
+  const resEdad = document.getElementById("res-edad");
+
+  btnEdad?.addEventListener("click", () => {
+    try {
+      const edadPablo = parseFloat(inputEdadPablo.value);
+      const k = parseFloat(inputEdadK.value);
+      const razonFutura = parseFloat(inputEdadRazon.value);
+      const res = edadFuturaPablo(edadPablo, k, razonFutura);
+      resEdad.innerHTML = `Edad futura de Pablo: <strong>${res.edadFutura} años</strong><br>` +
+                          `Hermana actual: <strong>${res.edadHermana} años</strong> | Años transcurridos: <strong>${res.t}</strong><br>` +
+                          `<small style="color: var(--text-muted);">${res.pasos.join(" • ")}</small>`;
+    } catch (e) {
+      resEdad.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
+    }
+  });
+
+  // Reto 6 (Taller Reto 6): Masa de Recipiente Vacio
+  const btnRecipiente = document.getElementById("btn-calc-recipiente");
+  const inputPesoLleno = document.getElementById("input-peso-lleno");
+  const inputPesoParcial = document.getElementById("input-peso-parcial");
+  const inputPesoFrac = document.getElementById("input-peso-frac");
+  const resRecipiente = document.getElementById("res-recipiente");
+
+  btnRecipiente?.addEventListener("click", () => {
+    try {
+      const lleno = parseFloat(inputPesoLleno.value);
+      const parcial = parseFloat(inputPesoParcial.value);
+      const fraccion = parseFloat(inputPesoFrac.value);
+      const res = pesoRecipienteVacio(lleno, parcial, fraccion);
+      resRecipiente.innerHTML = `Peso del recipiente vacío: <strong>${res.pesoVacio}</strong><br>` +
+                                `Contenido total estimado: <strong>${res.pesoContenido}</strong><br>` +
+                                `<small style="color: var(--text-muted);">${res.pasos.join(" • ")}</small>`;
+    } catch (e) {
+      resRecipiente.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
+    }
+  });
+
+  // Reto 7 (Taller Reto 7): Diferencial de Ingreso por Elasticidad
+  const btnIngreso = document.getElementById("btn-calc-ingreso");
+  const inputQ1 = document.getElementById("input-q1");
+  const inputP1 = document.getElementById("input-p1");
+  const inputQ2 = document.getElementById("input-q2");
+  const inputP2 = document.getElementById("input-p2");
+  const resIngreso = document.getElementById("res-ingreso");
+
+  btnIngreso?.addEventListener("click", () => {
+    try {
+      const q1 = parseFloat(inputQ1.value);
+      const p1 = parseFloat(inputP1.value);
+      const q2 = parseFloat(inputQ2.value);
+      const p2 = parseFloat(inputP2.value);
+      const res = diferenciaIngresoDolares(q1, p1, q2, p2);
+      resIngreso.innerHTML = `Diferencia de ingresos (I₂ - I₁): <strong>$${res.diferenciaDolares}</strong><br>` +
+                             `Ingreso 1: <strong>${res.i1Cent} ctv</strong> | Ingreso 2: <strong>${res.i2Cent} ctv</strong><br>` +
+                             `<small style="color: var(--text-muted);">${res.pasos.join(" • ")}</small>`;
+    } catch (e) {
+      resIngreso.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
+    }
+  });
+
+  // Reto 8 (Taller Reto 10): Porcentaje de Aumento
+  const btnAumento = document.getElementById("btn-calc-aumento");
+  const inputV1 = document.getElementById("input-v1");
+  const inputV2 = document.getElementById("input-v2");
+  const resAumento = document.getElementById("res-aumento");
+
+  btnAumento?.addEventListener("click", () => {
+    try {
+      const v1 = parseFloat(inputV1.value);
+      const v2 = parseFloat(inputV2.value);
+      const res = porcentajeAumento(v1, v2);
+      resAumento.innerHTML = `Porcentaje de aumento: <strong>${res.porcentaje}%</strong><br>` +
+                             `Variación absoluta: <strong>${res.variacion}</strong><br>` +
+                             `<small style="color: var(--text-muted);">${res.pasos.join(" • ")}</small>`;
+    } catch (e) {
+      resAumento.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
+    }
+  });
+
+  // Reto 9 (Taller Reto 11): Cuotas vs Contado
+  const btnContado = document.getElementById("btn-calc-contado");
+  const inputCuotasN = document.getElementById("input-cuotas-n");
+  const inputCuotasMonto = document.getElementById("input-cuotas-monto");
+  const inputPrecioContado = document.getElementById("input-precio-contado");
+  const resContado = document.getElementById("res-contado");
+
+  btnContado?.addEventListener("click", () => {
+    try {
+      const nCuotas = parseInt(inputCuotasN.value, 10);
+      const montoCuota = parseFloat(inputCuotasMonto.value);
+      const precioContado = parseFloat(inputPrecioContado.value);
+      const res = ahorroAlContado(nCuotas, montoCuota, precioContado);
+      resContado.innerHTML = `Ahorro al contado: <strong>${res.ahorro}</strong><br>` +
+                             `Total financiado: <strong>${res.totalFinanciado}</strong> vs Contado: <strong>${precioContado}</strong><br>` +
+                             `<small style="color: var(--text-muted);">${res.pasos.join(" • ")}</small>`;
+    } catch (e) {
+      resContado.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
+    }
+  });
+
+  // Reto 10 (Taller Reto 12): Elemento Intruso por Patron
+  const btnIntruso = document.getElementById("btn-calc-intruso");
+  const inputIntrusoLista = document.getElementById("input-intruso-lista");
+  const inputIntrusoDiv = document.getElementById("input-intruso-div");
+  const resIntruso = document.getElementById("res-intruso");
+
+  btnIntruso?.addEventListener("click", () => {
+    try {
+      const lista = inputIntrusoLista.value
+        .split(",")
+        .map(item => parseFloat(item.trim()))
+        .filter(n => !Number.isNaN(n));
+      const divisor = parseFloat(inputIntrusoDiv.value);
+      const res = elementoIntrusoDivisor(lista, divisor);
+      resIntruso.innerHTML = `Elemento intruso: <strong>${res.intruso !== null ? res.intruso : "Ninguno"}</strong><br>` +
+                             `<small style="color: var(--text-muted);">${res.pasos.join(" • ")}</small>`;
+    } catch (e) {
+      resIntruso.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
+    }
+  });
+
+  // Reto Extra (Taller Reto 15): Dato Faltante por Promedio
+  const btnFaltante = document.getElementById("btn-calc-faltante");
+  const inputPromObjetivo = document.getElementById("input-prom-objetivo");
+  const inputPromTotal = document.getElementById("input-prom-total");
+  const inputPromConocidos = document.getElementById("input-prom-conocidos");
+  const resFaltante = document.getElementById("res-faltante");
+
+  btnFaltante?.addEventListener("click", () => {
+    try {
+      const promedio = parseFloat(inputPromObjetivo.value);
+      const totalElementos = parseInt(inputPromTotal.value, 10);
+      const conocidos = inputPromConocidos.value
+        .split(",")
+        .map(item => parseFloat(item.trim()))
+        .filter(n => !Number.isNaN(n));
+      const res = numeroFaltantePromedio(promedio, totalElementos, conocidos);
+      resFaltante.innerHTML = `Número faltante: <strong>${res.faltante}</strong><br>` +
+                              `Suma requerida: <strong>${res.sumaRequerida}</strong> | Suma conocidos: <strong>${res.sumaConocidos}</strong><br>` +
+                              `<small style="color: var(--text-muted);">${res.pasos.join(" • ")}</small>`;
+    } catch (e) {
+      resFaltante.innerHTML = `<span style="color: var(--accent-red);">${e.message}</span>`;
     }
   });
 }
