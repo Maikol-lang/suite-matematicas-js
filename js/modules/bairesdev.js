@@ -73,180 +73,228 @@ export function calcularViajesMinimos(totalItems, capacidadPorViaje) {
   }
   return Math.ceil(totalItems / capacidadPorViaje);
 }
+
 /**
- * Reto 5: Divisores exactos de un numero entero positivo
- * @param {number} numero - Entero positivo mayor o igual a 1
- * @returns {{ numero: number, divisores: number[], cantidad: number, pasos: string[] }}
+ * Reto 5 (Taller Reto 5): Problema de Edades Relativas
+ * Pablo tiene edadPablo anios y es k veces la edad de su hermana.
+ * Calcula la edad de Pablo cuando sea razonFutura veces la edad de su hermana.
  */
-export function obtenerDivisoresExactos(numero) {
-  if (!Number.isInteger(numero) || numero < 1) {
-    throw new Error("El numero debe ser un entero positivo mayor o igual a 1.");
-  }
-
-  const divisores = [];
-  const pasos = [`Buscando divisores exactos para ${numero} (residuo igual a 0):`];
-
-  for (let i = 1; i <= numero; i++) {
-    if (numero % i === 0) {
-      divisores.push(i);
-      pasos.push(`${numero} / ${i} = ${numero / i} (residuo 0 -> es divisor)`);
-    }
-  }
-
-  return {
-    numero,
-    divisores,
-    cantidad: divisores.length,
-    pasos
-  };
-}
-/**
- * Reto 6: Diferencia y proyeccion de edades entre dos personas
- * @param {number} edadA - Edad actual de la persona A (>= 0)
- * @param {number} edadB - Edad actual de la persona B (>= 0)
- * @param {number} aniosFuturo - Anios a proyectar (>= 0)
- * @returns {{ diferencia: number, edadAFutura: number, edadBFutura: number, pasos: string[] }}
- */
-export function calcularProyeccionEdades(edadA, edadB, aniosFuturo = 0) {
-  if (
-    !Number.isFinite(edadA) ||
-    !Number.isFinite(edadB) ||
-    !Number.isFinite(aniosFuturo) ||
-    edadA < 0 ||
-    edadB < 0 ||
-    aniosFuturo < 0
-  ) {
-    throw new Error("Las edades y los anios deben ser numeros mayores o iguales a 0.");
-  }
-
-  const diferencia = Math.abs(edadA - edadB);
-  const edadAFutura = edadA + aniosFuturo;
-  const edadBFutura = edadB + aniosFuturo;
-
-  const pasos = [
-    `Edad A actual: ${edadA}, Edad B actual: ${edadB}`,
-    `Diferencia absoluta de edades: |${edadA} - ${edadB}| = ${diferencia} anios`,
-    `Proyeccion en ${aniosFuturo} anios: Persona A tendra ${edadAFutura} y Persona B tendra ${edadBFutura}`
-  ];
-
-  return {
-    diferencia,
-    edadAFutura,
-    edadBFutura,
-    pasos
-  };
-}
-/**
- * Reto 7: Proporcion directa (regla de tres sencilla)
- * Si 'a' corresponde a 'b', cuanto corresponde a 'c'
- */
-export function calcularProporcionDirecta(a, b, c) {
-  if (!Number.isFinite(a) || !Number.isFinite(b) || !Number.isFinite(c)) {
+export function edadFuturaPablo(edadPablo, k, razonFutura = 2) {
+  if (!Number.isFinite(edadPablo) || !Number.isFinite(k) || !Number.isFinite(razonFutura)) {
     throw new Error("Todos los valores deben ser numeros validos.");
   }
-  if (a <= 0 || b < 0 || c < 0) {
-    throw new Error("El primer valor debe ser mayor a 0 y los demas no pueden ser negativos.");
+  if (edadPablo <= 0 || k <= 0 || razonFutura <= 1) {
+    throw new Error("La edad y k deben ser mayores a 0, y la razon futura mayor a 1.");
   }
 
-  const resultado = (b * c) / a;
+  const edadHermana = edadPablo / k;
+  const t = (edadPablo - razonFutura * edadHermana) / (razonFutura - 1);
+  const edadFutura = Math.trunc(edadPablo + t);
+
   const pasos = [
-    `Relacion inicial: ${a} -> ${b}`,
-    `Multiplicamos: ${b} * ${c} = ${b * c}`,
-    `Dividimos entre ${a}: (${b * c}) / ${a} = ${resultado}`
+    `Edad actual de Pablo: ${edadPablo}, k = ${k} -> Hermana actual: ${edadHermana}`,
+    `Tiempo transcurrido t: (${edadPablo} - ${razonFutura} * ${edadHermana}) / (${razonFutura} - 1) = ${t}`,
+    `Edad futura de Pablo cuando la razon sea ${razonFutura}: ${edadFutura}`
   ];
 
-  return { resultado, pasos };
+  return {
+    edadHermana,
+    t,
+    edadFutura,
+    pasos
+  };
 }
 
 /**
- * Reto 8: Promedio de una lista de numeros
+ * Reto 6 (Taller Reto 6): Masa de Recipiente y Contenido Parcial
+ * Resuelve V + C = pesoLleno y V + fraccion * C = pesoParcial
  */
-export function calcularPromedioSimple(numeros) {
+export function pesoRecipienteVacio(pesoLleno, pesoParcial, fraccion = 0.5) {
+  if (!Number.isFinite(pesoLleno) || !Number.isFinite(pesoParcial) || !Number.isFinite(fraccion)) {
+    throw new Error("Todos los valores deben ser numeros validos.");
+  }
+  if (fraccion <= 0 || fraccion >= 1) {
+    throw new Error("La fraccion debe estar entre 0 y 1 (sin incluir los extremos).");
+  }
+
+  const pesoContenido = (pesoLleno - pesoParcial) / (1 - fraccion);
+  const pesoVacio = Number((pesoLleno - pesoContenido).toFixed(2));
+
+  const pasos = [
+    `Peso lleno: ${pesoLleno}, Peso parcial: ${pesoParcial}, Fraccion: ${fraccion}`,
+    `Contenido total: (${pesoLleno} - ${pesoParcial}) / (1 - ${fraccion}) = ${pesoContenido}`,
+    `Peso del recipiente vacio: ${pesoLleno} - ${pesoContenido} = ${pesoVacio}`
+  ];
+
+  return {
+    pesoContenido,
+    pesoVacio,
+    pasos
+  };
+}
+
+/**
+ * Reto 7 (Taller Reto 7): Diferencial de Ingreso por Elasticidad
+ * Calcula la diferencia neta de ingresos (I2 - I1) en dolares (1 dolar = 100 centavos)
+ */
+export function diferenciaIngresoDolares(q1, p1Cent, q2, p2Cent) {
+  if (
+    !Number.isFinite(q1) ||
+    !Number.isFinite(p1Cent) ||
+    !Number.isFinite(q2) ||
+    !Number.isFinite(p2Cent)
+  ) {
+    throw new Error("Todos los valores deben ser numeros validos.");
+  }
+  if (q1 < 0 || p1Cent < 0 || q2 < 0 || p2Cent < 0) {
+    throw new Error("Las cantidades y precios no pueden ser negativos.");
+  }
+
+  const i1Cent = q1 * p1Cent;
+  const i2Cent = q2 * p2Cent;
+  const diferenciaDolares = Number(((i2Cent - i1Cent) / 100).toFixed(2));
+
+  const pasos = [
+    `Ingreso inicial (I1): ${q1} * ${p1Cent} centavos = ${i1Cent} centavos`,
+    `Ingreso nuevo (I2): ${q2} * ${p2Cent} centavos = ${i2Cent} centavos`,
+    `Diferencia en dolares: (${i2Cent} - ${i1Cent}) / 100 = $${diferenciaDolares}`
+  ];
+
+  return {
+    i1Cent,
+    i2Cent,
+    diferenciaDolares,
+    pasos
+  };
+}
+
+/**
+ * Reto 8 (Taller Reto 10): Calculo de Porcentaje de Aumento
+ * Calcula ((v2 - v1) / v1) * 100 redondeado a 2 decimales
+ */
+export function porcentajeAumento(v1, v2) {
+  if (!Number.isFinite(v1) || !Number.isFinite(v2)) {
+    throw new Error("Ingresa valores numericos validos.");
+  }
+  if (v1 <= 0) {
+    throw new Error("El valor inicial debe ser mayor a 0.");
+  }
+
+  const incremento = ((v2 - v1) / v1) * 100;
+  const porcentaje = Number(incremento.toFixed(2));
+
+  const pasos = [
+    `Valor inicial (v1): ${v1}, Valor actual (v2): ${v2}`,
+    `Variacion: ${v2} - ${v1} = ${v2 - v1}`,
+    `Porcentaje de aumento: ((${v2} - ${v1}) / ${v1}) * 100 = ${porcentaje}%`
+  ];
+
+  return {
+    variacion: v2 - v1,
+    porcentaje,
+    pasos
+  };
+}
+
+/**
+ * Reto 9 (Taller Reto 11): Analisis Financiero: Cuotas vs Contado
+ * Calcula el ahorro al pagar al contado frente a financiar en cuotas
+ */
+export function ahorroAlContado(nCuotas, montoCuota, precioContado) {
+  if (!Number.isFinite(nCuotas) || !Number.isFinite(montoCuota) || !Number.isFinite(precioContado)) {
+    throw new Error("Todos los valores deben ser numeros validos.");
+  }
+  if (!Number.isInteger(nCuotas) || nCuotas <= 0 || montoCuota < 0 || precioContado < 0) {
+    throw new Error("El numero de cuotas debe ser un entero positivo y los montos no negativos.");
+  }
+
+  const totalFinanciado = nCuotas * montoCuota;
+  const ahorro = Number((totalFinanciado - precioContado).toFixed(2));
+
+  const pasos = [
+    `Total financiado: ${nCuotas} cuotas * ${montoCuota} = ${totalFinanciado}`,
+    `Precio al contado: ${precioContado}`,
+    `Ahorro al contado: ${totalFinanciado} - ${precioContado} = ${ahorro}`
+  ];
+
+  return {
+    totalFinanciado,
+    ahorro,
+    pasos
+  };
+}
+
+/**
+ * Reto 10 (Taller Reto 12): Deteccion de Elemento Intruso por Patron
+ * Encuentra el primer numero de la lista que NO es divisible entre el divisor indicado
+ */
+export function elementoIntrusoDivisor(numeros, divisor) {
   if (!Array.isArray(numeros) || numeros.length === 0) {
     throw new Error("Debes enviar una lista con al menos un numero.");
   }
-  for (const n of numeros) {
-    if (!Number.isFinite(n) || n < 0) {
-      throw new Error("Todos los numeros de la lista deben ser positivos.");
+  if (!Number.isFinite(divisor) || divisor === 0) {
+    throw new Error("El divisor debe ser un numero distinto de 0.");
+  }
+
+  for (const num of numeros) {
+    if (!Number.isFinite(num)) {
+      throw new Error("Todos los elementos de la lista deben ser numeros validos.");
+    }
+    if (num % divisor !== 0) {
+      return {
+        intruso: num,
+        divisor,
+        pasos: [
+          `Lista evaluada: [${numeros.join(", ")}] con divisor ${divisor}`,
+          `El numero ${num} tiene residuo ${num % divisor} !== 0 -> es el intruso`
+        ]
+      };
     }
   }
 
-  let suma = 0;
-  for (const n of numeros) {
-    suma += n;
-  }
-  const promedio = suma / numeros.length;
-  const pasos = [
-    `Numeros: [${numeros.join(", ")}]`,
-    `Suma total: ${suma}`,
-    `Promedio: ${suma} / ${numeros.length} = ${promedio}`
-  ];
-
-  return { suma, promedio, pasos };
+  return {
+    intruso: null,
+    divisor,
+    pasos: [
+      `Lista evaluada: [${numeros.join(", ")}] con divisor ${divisor}`,
+      "Todos los numeros cumplen con la divisibilidad"
+    ]
+  };
 }
 
 /**
- * Reto 9: Porcentaje / descuento evitando errores de decimales
+ * Reto extra (Taller Reto 15): Reconstruccion de Dato Faltante por Promedio
+ * Calcula el numero faltante dado el promedio esperado, total de elementos y conocidos
  */
-export function calcularPorcentajeSeguro(valor, porcentaje) {
-  if (!Number.isFinite(valor) || !Number.isFinite(porcentaje)) {
-    throw new Error("Ingresa numeros validos.");
+export function numeroFaltantePromedio(promedio, totalElementos, conocidos) {
+  if (!Number.isFinite(promedio) || !Number.isInteger(totalElementos) || totalElementos < 1) {
+    throw new Error("Ingresa un promedio valido y un total de elementos entero mayor o igual a 1.");
   }
-  if (valor < 0 || porcentaje < 0) {
-    throw new Error("El valor y el porcentaje no pueden ser negativos.");
+  if (!Array.isArray(conocidos) || conocidos.length >= totalElementos) {
+    throw new Error("La cantidad de numeros conocidos debe ser menor que el total de elementos.");
   }
 
-  // Trabajamos en centavos para evitar decimales raros de punto flotante
-  const centavos = Math.round(valor * 100);
-  const montoDescuentoCentavos = Math.round((centavos * porcentaje) / 100);
-  const montoDescuento = montoDescuentoCentavos / 100;
-  const precioFinal = (centavos - montoDescuentoCentavos) / 100;
+  let sumaConocidos = 0;
+  for (const n of conocidos) {
+    if (!Number.isFinite(n)) {
+      throw new Error("Todos los numeros conocidos deben ser validos.");
+    }
+    sumaConocidos += n;
+  }
+
+  const sumaRequerida = promedio * totalElementos;
+  const faltante = Number((sumaRequerida - sumaConocidos).toFixed(4));
 
   const pasos = [
-    `Precio base: $${valor.toFixed(2)}`,
-    `Porcentaje aplicado: ${porcentaje}%`,
-    `Monto calculado: $${montoDescuento.toFixed(2)} | Resultado final: $${precioFinal.toFixed(2)}`
+    `Suma total requerida: ${promedio} * ${totalElementos} = ${sumaRequerida}`,
+    `Suma de conocidos [${conocidos.join(", ")}]: ${sumaConocidos}`,
+    `Numero faltante: ${sumaRequerida} - ${sumaConocidos} = ${faltante}`
   ];
 
-  return { montoDescuento, precioFinal, pasos };
-}
-
-/**
- * Reto 10: Suma de numeros pares desde 1 hasta N
- */
-export function sumarParesHasta(limite) {
-  if (!Number.isInteger(limite) || limite < 1) {
-    throw new Error("El limite debe ser un numero entero mayor o igual a 1.");
-  }
-
-  let sumaPares = 0;
-  const pares = [];
-  for (let i = 2; i <= limite; i += 2) {
-    pares.push(i);
-    sumaPares += i;
-  }
-
-  const pasos = [
-    `Limite: ${limite}`,
-    `Pares encontrados: [${pares.join(", ")}]`,
-    `Suma total de pares: ${sumaPares}`
-  ];
-
-  return { pares, sumaPares, pasos };
-}
-/**
- * Reto extra: Area de un triangulo a partir de base y altura
- */
-export function calcularAreaTriangulo(base, altura) {
-  if (!Number.isFinite(base) || !Number.isFinite(altura) || base <= 0 || altura <= 0) {
-    throw new Error("La base y la altura deben ser numeros mayores a 0.");
-  }
-
-  const area = (base * altura) / 2;
-  const pasos = [
-    `Base: ${base}, Altura: ${altura}`,
-    `Formula: (${base} * ${altura}) / 2 = ${area}`
-  ];
-
-  return { area, pasos };
+  return {
+    sumaRequerida,
+    sumaConocidos,
+    faltante,
+    pasos
+  };
 }
