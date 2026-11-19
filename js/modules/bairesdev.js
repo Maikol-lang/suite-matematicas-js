@@ -234,3 +234,19 @@ export function sumarParesHasta(limite) {
 
   return { pares, sumaPares, pasos };
 }
+/**
+ * Reto extra: Area de un triangulo a partir de base y altura
+ */
+export function calcularAreaTriangulo(base, altura) {
+  if (!Number.isFinite(base) || !Number.isFinite(altura) || base <= 0 || altura <= 0) {
+    throw new Error("La base y la altura deben ser numeros mayores a 0.");
+  }
+
+  const area = (base * altura) / 2;
+  const pasos = [
+    `Base: ${base}, Altura: ${altura}`,
+    `Formula: (${base} * ${altura}) / 2 = ${area}`
+  ];
+
+  return { area, pasos };
+}
