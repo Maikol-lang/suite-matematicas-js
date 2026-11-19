@@ -100,3 +100,39 @@ export function obtenerDivisoresExactos(numero) {
     pasos
   };
 }
+/**
+ * Reto 6: Diferencia y proyeccion de edades entre dos personas
+ * @param {number} edadA - Edad actual de la persona A (>= 0)
+ * @param {number} edadB - Edad actual de la persona B (>= 0)
+ * @param {number} aniosFuturo - Anios a proyectar (>= 0)
+ * @returns {{ diferencia: number, edadAFutura: number, edadBFutura: number, pasos: string[] }}
+ */
+export function calcularProyeccionEdades(edadA, edadB, aniosFuturo = 0) {
+  if (
+    !Number.isFinite(edadA) ||
+    !Number.isFinite(edadB) ||
+    !Number.isFinite(aniosFuturo) ||
+    edadA < 0 ||
+    edadB < 0 ||
+    aniosFuturo < 0
+  ) {
+    throw new Error("Las edades y los anios deben ser numeros mayores o iguales a 0.");
+  }
+
+  const diferencia = Math.abs(edadA - edadB);
+  const edadAFutura = edadA + aniosFuturo;
+  const edadBFutura = edadB + aniosFuturo;
+
+  const pasos = [
+    `Edad A actual: ${edadA}, Edad B actual: ${edadB}`,
+    `Diferencia absoluta de edades: |${edadA} - ${edadB}| = ${diferencia} anios`,
+    `Proyeccion en ${aniosFuturo} anios: Persona A tendra ${edadAFutura} y Persona B tendra ${edadBFutura}`
+  ];
+
+  return {
+    diferencia,
+    edadAFutura,
+    edadBFutura,
+    pasos
+  };
+}
