@@ -136,3 +136,101 @@ export function calcularProyeccionEdades(edadA, edadB, aniosFuturo = 0) {
     pasos
   };
 }
+/**
+ * Reto 7: Proporcion directa (regla de tres sencilla)
+ * Si 'a' corresponde a 'b', cuanto corresponde a 'c'
+ */
+export function calcularProporcionDirecta(a, b, c) {
+  if (!Number.isFinite(a) || !Number.isFinite(b) || !Number.isFinite(c)) {
+    throw new Error("Todos los valores deben ser numeros validos.");
+  }
+  if (a <= 0 || b < 0 || c < 0) {
+    throw new Error("El primer valor debe ser mayor a 0 y los demas no pueden ser negativos.");
+  }
+
+  const resultado = (b * c) / a;
+  const pasos = [
+    `Relacion inicial: ${a} -> ${b}`,
+    `Multiplicamos: ${b} * ${c} = ${b * c}`,
+    `Dividimos entre ${a}: (${b * c}) / ${a} = ${resultado}`
+  ];
+
+  return { resultado, pasos };
+}
+
+/**
+ * Reto 8: Promedio de una lista de numeros
+ */
+export function calcularPromedioSimple(numeros) {
+  if (!Array.isArray(numeros) || numeros.length === 0) {
+    throw new Error("Debes enviar una lista con al menos un numero.");
+  }
+  for (const n of numeros) {
+    if (!Number.isFinite(n) || n < 0) {
+      throw new Error("Todos los numeros de la lista deben ser positivos.");
+    }
+  }
+
+  let suma = 0;
+  for (const n of numeros) {
+    suma += n;
+  }
+  const promedio = suma / numeros.length;
+  const pasos = [
+    `Numeros: [${numeros.join(", ")}]`,
+    `Suma total: ${suma}`,
+    `Promedio: ${suma} / ${numeros.length} = ${promedio}`
+  ];
+
+  return { suma, promedio, pasos };
+}
+
+/**
+ * Reto 9: Porcentaje / descuento evitando errores de decimales
+ */
+export function calcularPorcentajeSeguro(valor, porcentaje) {
+  if (!Number.isFinite(valor) || !Number.isFinite(porcentaje)) {
+    throw new Error("Ingresa numeros validos.");
+  }
+  if (valor < 0 || porcentaje < 0) {
+    throw new Error("El valor y el porcentaje no pueden ser negativos.");
+  }
+
+  // Trabajamos en centavos para evitar decimales raros de punto flotante
+  const centavos = Math.round(valor * 100);
+  const montoDescuentoCentavos = Math.round((centavos * porcentaje) / 100);
+  const montoDescuento = montoDescuentoCentavos / 100;
+  const precioFinal = (centavos - montoDescuentoCentavos) / 100;
+
+  const pasos = [
+    `Precio base: $${valor.toFixed(2)}`,
+    `Porcentaje aplicado: ${porcentaje}%`,
+    `Monto calculado: $${montoDescuento.toFixed(2)} | Resultado final: $${precioFinal.toFixed(2)}`
+  ];
+
+  return { montoDescuento, precioFinal, pasos };
+}
+
+/**
+ * Reto 10: Suma de numeros pares desde 1 hasta N
+ */
+export function sumarParesHasta(limite) {
+  if (!Number.isInteger(limite) || limite < 1) {
+    throw new Error("El limite debe ser un numero entero mayor o igual a 1.");
+  }
+
+  let sumaPares = 0;
+  const pares = [];
+  for (let i = 2; i <= limite; i += 2) {
+    pares.push(i);
+    sumaPares += i;
+  }
+
+  const pasos = [
+    `Limite: ${limite}`,
+    `Pares encontrados: [${pares.join(", ")}]`,
+    `Suma total de pares: ${sumaPares}`
+  ];
+
+  return { pares, sumaPares, pasos };
+}
